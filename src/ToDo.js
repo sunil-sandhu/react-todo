@@ -20,7 +20,7 @@ class ToDo extends Component {
         };
     };
 
-    createNewToDoItem = e => {
+    createNewToDoItem = () => {
       this.setState(({ list, todo }) => ({
         list: [
             ...list,
@@ -34,8 +34,10 @@ class ToDo extends Component {
 
 
     handleKeyPress = e => {
-        if (e.key === 'Enter') {
+        if (e.target.value !== '') {
+          if (e.key === 'Enter') {
             this.createNewToDoItem();
+          }
         }
     };
 
@@ -49,7 +51,7 @@ class ToDo extends Component {
     // this is now being emitted back to the parent from the child component
     deleteItem = indexToDelete => {
       this.setState(({ list }) => ({
-        list: list.filter(({}, index) => index !== indexToDelete)
+        list: list.filter((toDo, index) => index !== indexToDelete)
       }));
     };
 
@@ -72,7 +74,7 @@ class ToDo extends Component {
                     )}
 
                 </div>
-                <input type="text" onChange={this.handleInput} onKeyPress={this.handleKeyPress}/>
+                <input type="text" value={this.state.todo} onChange={this.handleInput} onKeyPress={this.handleKeyPress}/>
                 <div className="ToDo-Add" onClick={this.createNewToDoItem}>+</div>
                 </div>
             </div>
