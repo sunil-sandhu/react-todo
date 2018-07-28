@@ -16,49 +16,43 @@ class ToDo extends Component {
                     'todo': 'buy milk'
                 }
             ],
-            editMode: false
+            todo: ''
         };
     };
 
-    createNewToDoItem = () => {
-        let newList = this.state.list;
-        let input = document.querySelector('input');
-        newList.push(
-            {
-                'number': 'item' + newList.length,
-                'todo': input.value}
-            );
-        this.setState({
-           list: newList
-        });
-        input.value = null;
+    createNewToDoItem = e => {
+      this.setState(({ list, todo }) => ({
+        list: [
+            ...list,
+          {
+            todo
+          }
+        ],
+        todo: ''
+      }));
     };
 
-    handleKeyPress = (e) => {
+
+    handleKeyPress = e => {
         if (e.key === 'Enter') {
             this.createNewToDoItem();
         }
     };
 
-
-    deleteItem = (indexToDelete) => {
-        // this is now being emitted back to the parent from the child component
-        let array = this.state.list; // make a separate copy of the array
-        console.log(indexToDelete);
-        array.splice(indexToDelete, 1);  // remove that item from the array
-        this.setState({list: array}); // set new state of array with indexed item deleted
+    handleInput = e => {
+      this.setState({
+        todo: e.target.value
+      });
     };
 
-    // updateItem = (e) => {
-    //     console.log('updating');
-    //     this.setState({editMode: true})
-    //     let list = [...this.state.list]; // make a separate copy of the array
-    //     let itemToEdit = list.indexOf(e.target.value); //get the location of the item in the array that we want to remove
-    //     itemToEdit.style.display = 'none';
-    //
-    //     console.log(itemToEdit);
-    //
-    // };
+
+    // this is now being emitted back to the parent from the child component
+    deleteItem = indexToDelete => {
+      this.setState(({ list }) => ({
+        list: list.filter(({}, index) => index !== indexToDelete)
+      }));
+    };
+
 
     render() {
         return (
@@ -72,15 +66,13 @@ class ToDo extends Component {
                             return <ToDoItem
                                             key={key}
                                             item={item.todo}
-                                            number={key}
                                             deleteItem={this.deleteItem.bind(this, key)}
-                                            // updateItem={this.updateItem.bind(this)}
-                            />
-                        }
+                                            />
+                      }
                     )}
 
                 </div>
-                <input type="text" onKeyPress={this.handleKeyPress}/>
+                <input type="text" onChange={this.handleInput} onKeyPress={this.handleKeyPress}/>
                 <div className="ToDo-Add" onClick={this.createNewToDoItem}>+</div>
                 </div>
             </div>
