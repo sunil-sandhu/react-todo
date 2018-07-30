@@ -6,25 +6,13 @@ import Logo from './assets/logo.png';
 class ToDo extends Component {
     state = {
         // this is where the data goes
-        list: [
-            {
-                todo: 'clean the house'
-            },
-            {
-                todo: 'buy milk'
-            }
-        ],
+        list: ['clean the house', 'buy milk'],
         todo: ''
     };
 
     createNewToDoItem = () => {
         this.setState(({ list, todo }) => ({
-            list: [
-                ...list,
-                {
-                    todo
-                }
-            ],
+            list: [...list, todo],
             todo: ''
         }));
     };
@@ -62,7 +50,7 @@ class ToDo extends Component {
                                 <ToDoItem
                                     key={index}
                                     index={index}
-                                    item={item.todo}
+                                    item={item}
                                     deleteItem={this.deleteItem}
                                 />
                             );
