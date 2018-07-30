@@ -57,12 +57,13 @@ class ToDo extends Component {
                 <h1 className="ToDo-Header">React To Do</h1>
                 <div className="ToDo-Container">
                     <div className="ToDo-Content">
-                        {this.state.list.map((item, key) => {
+                        {this.state.list.map((item, index) => {
                             return (
                                 <ToDoItem
-                                    key={key}
+                                    key={index}
+                                    index={index}
                                     item={item.todo}
-                                    deleteItem={this.deleteItem.bind(this, key)}
+                                    deleteItem={this.deleteItem}
                                 />
                             );
                         })}

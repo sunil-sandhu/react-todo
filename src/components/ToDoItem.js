@@ -1,20 +1,19 @@
-import React, {Component} from 'react';
+import React, { PureComponent } from 'react';
 import './ToDoItem.css';
 
-class ToDoItem extends Component {
-    // constructor(props) {
-    //     super(props);
-    //     // this.state = {
-    //     //     item: this.props.item
-    //     // }
-    // }
-
+class ToDoItem extends PureComponent {
+    onClick = () => {
+        const { index, deleteItem } = this.props;
+        deleteItem(index);
+    };
 
     render() {
         return (
             <div className="ToDoItem">
                 <p className="ToDoItem-Text">{this.props.item}</p>
-                <div className="ToDoItem-Delete" onClick={this.props.deleteItem}>-</div>
+                <div className="ToDoItem-Delete" onClick={this.onClick}>
+                    -
+                </div>
             </div>
         );
     }
