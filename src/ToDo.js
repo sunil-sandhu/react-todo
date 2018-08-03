@@ -4,7 +4,7 @@ import ToDoItem from "./components/ToDoItem";
 import Logo from "./assets/logo.png";
 
 class ToDo extends Component {
-  // Comparable to Vue's data()
+  // Comparable to data() in Vue's <script>
   state = {
     list: ["clean the house", "buy milk"],
     currentInput: ""
@@ -37,7 +37,7 @@ class ToDo extends Component {
     );
   }
 
-  // Comparable to Vue's <script>
+  // Comparable to method in Vue's <script>
   createTodo = () =>
     this.setState(({ list, currentInput }) => ({
       list: [...list, currentInput],
