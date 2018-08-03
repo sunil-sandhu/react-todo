@@ -1,85 +1,118 @@
-import React, {Component} from 'react';
-import './ToDo.css';
-import ToDoItem from './components/ToDoItem';
-import Logo from './assets/logo.png';
+import React, { Component } from "react";
+import styled from "styled-components";
+import ToDoItem from "./components/ToDoItem";
+import Logo from "./assets/logo.png";
 
 class ToDo extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            // this is where the data goes
-            list: [
-                {
-                    'todo': 'clean the house'
-                },
-                {
-                    'todo': 'buy milk'
-                }
-            ],
-            todo: ''
-        };
-    };
+  // Comparable to Vue's data()
+  state = {
+    list: ["clean the house", "buy milk"],
+    currentInput: ""
+  };
 
-    createNewToDoItem = () => {
-      this.setState(({ list, todo }) => ({
-        list: [
-            ...list,
-          {
-            todo
-          }
-        ],
-        todo: ''
-      }));
-    };
+  // Comparable to Vue's <template>
+  render() {
+    const { list, currentInput } = this.state;
+    return (
+      <main {...this.props}>
+        <img src={Logo} alt="React logo" />
+        <h1>React To Do</h1>
+        <ul>
+          {list.map((item, index) => (
+            <ToDoItem
+              key={index}
+              item={item}
+              handleDelete={this.deleteTodo(index)}
+            />
+          ))}
+        </ul>
+        <input
+          type="text"
+          value={currentInput}
+          onChange={this.handleInput}
+          onKeyPress={this.handleKeyPress}
+        />
+        <button onClick={this.createTodo}>+</button>
+      </main>
+    );
+  }
 
+  // Comparable to Vue's <script>
+  createTodo = () =>
+    this.setState(({ list, currentInput }) => ({
+      list: [...list, currentInput],
+      currentInput: ""
+    }));
 
-    handleKeyPress = e => {
-        if (e.target.value !== '') {
-          if (e.key === 'Enter') {
-            this.createNewToDoItem();
-          }
-        }
-    };
+  deleteTodo = index => () => {
+    this.setState(({ list }) => ({
+      list: list.filter((item, idx) => idx !== index)
+    }));
+  };
 
-    handleInput = e => {
-      this.setState({
-        todo: e.target.value
-      });
-    };
+  handleKeyPress = ({ target: { value }, key }) =>
+    value !== "" && key === "Enter" && this.createTodo();
 
-
-    // this is now being emitted back to the parent from the child component
-    deleteItem = indexToDelete => {
-      this.setState(({ list }) => ({
-        list: list.filter((toDo, index) => index !== indexToDelete)
-      }));
-    };
-
-
-    render() {
-        return (
-            <div className="ToDo">
-                <img className="Logo" src={Logo} alt="React logo"/>
-                <h1 className="ToDo-Header">React To Do</h1>
-                <div className="ToDo-Container">
-                <div className="ToDo-Content">
-
-                    {this.state.list.map((item, key) => {
-                            return <ToDoItem
-                                            key={key}
-                                            item={item.todo}
-                                            deleteItem={this.deleteItem.bind(this, key)}
-                                            />
-                      }
-                    )}
-
-                </div>
-                <input type="text" value={this.state.todo} onChange={this.handleInput} onKeyPress={this.handleKeyPress}/>
-                <div className="ToDo-Add" onClick={this.createNewToDoItem}>+</div>
-                </div>
-            </div>
-        );
-    }
+  handleInput = ({ target: { value } }) =>
+    this.setState({ currentInput: value });
 }
 
-export default ToDo;
+// Comparable to Vue's <style>
+export default styled(ToDo)`
+  text-align: center;
+  border: 1px solid white;
+  width: 80vw;
+  height: auto;
+  box-shadow: 2px 3px 15px rgba(0, 0, 0, 0.5);
+  background: #f6f6f6;
+  padding: 0 10% 60px;
+  margin: 40px auto;
+  box-sizing: border-box;
+
+  & img {
+    width: 50px;
+    position: relative;
+    top: 50px;
+  }
+
+  & h1 {
+    font-weight: 400;
+    text-transform: uppercase;
+    margin: 70px auto 30px;
+  }
+
+  & ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  & input {
+    width: 60%;
+    padding: 10px;
+    font-size: 1em;
+    margin: 10px auto;
+    box-shadow: 1px 3px 20px 0px rgba(0, 0, 0, 0.3);
+  }
+
+  & > button {
+    color: white;
+    font-size: 2em;
+    height: 46px;
+    width: 46px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto 0;
+    cursor: pointer;
+    background: #73ff73;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px #47a947;
+
+    &:hover {
+      box-shadow: none;
+      margin-left: calc(auto + 1px);
+    }
+  }
+`;
