@@ -14,9 +14,9 @@
 }
 
 .ToDoItem-Delete {
-    width: 20px;
-    padding: 5px;
-    height: 20px;
+    width: 35px;
+    /*padding: 5px;*/
+    height: 35px;
     cursor: pointer;
     background: #ff7373;
     border-radius: 10px;

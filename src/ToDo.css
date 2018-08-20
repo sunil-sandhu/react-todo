@@ -38,12 +38,12 @@ body {
 .ToDo-Add {
   color: white;
   font-size: 2em;
-  width: 0.5em;
-  height: 0.5em;
+  width: 40px;
+  height: 40px;
+  padding: 0px;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 15px;
   cursor: pointer;
   background: #73ff73;
   border-radius: 10px;
@@ -53,7 +53,6 @@ body {
 
 .ToDo-Add:hover {
   box-shadow: none;
-  margin-top: 21px;
   margin-left: calc(auto + 1px);
 }
 

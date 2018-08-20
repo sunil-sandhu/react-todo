@@ -62,20 +62,24 @@ class ToDo extends Component {
                 <img className="Logo" src={Logo} alt="React logo"/>
                 <h1 className="ToDo-Header">React To Do</h1>
                 <div className="ToDo-Container">
-                <div className="ToDo-Content">
 
-                    {this.state.list.map((item, key) => {
-                            return <ToDoItem
-                                            key={key}
-                                            item={item.todo}
-                                            deleteItem={this.deleteItem.bind(this, key)}
-                                            />
-                      }
-                    )}
+                    <div className="ToDo-Content">
 
-                </div>
-                <input type="text" value={this.state.todo} onChange={this.handleInput} onKeyPress={this.handleKeyPress}/>
-                <div className="ToDo-Add" onClick={this.createNewToDoItem}>+</div>
+                        {this.state.list.map((item, key) => {
+                                return <ToDoItem
+                                                key={key}
+                                                item={item.todo}
+                                                deleteItem={this.deleteItem.bind(this, key)}
+                                                />
+                          }
+                        )}
+                    </div>
+
+                    <div>
+                       <input type="text" value={this.state.todo} onChange={this.handleInput} onKeyPress={this.handleKeyPress}/>
+                       <button className="ToDo-Add" onClick={this.createNewToDoItem}>+</button>
+                    </div>
+
                 </div>
             </div>
         );
